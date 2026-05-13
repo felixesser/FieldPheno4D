@@ -7,10 +7,27 @@
 
 The dataset was gathered using a custom **Field Robot for High-throughput and High-resolution 3D Plant Phenotyping**. This robotic platform is equipped with two industrial-grade laser triangulation scanners and a highly-accurate georeferencing system to enable multi-temporal 3D reconstruction in agricultural fields, supporting the estimation of phenotypic traits such as leaf area, leaf angle, and plant height. You can find more detailed information about the robotic platform in our paper: [DOI](https://doi.org/10.1109/MRA.2023.3321402). The dataset was created in 2023 on the PhenoRob experimental field at Campus Klein-Altendorf, near Bonn, Germany.
 
-## Dataset Visualization
+## Dataset Teaser Visualization
 Below is an **animated .gif demo** showing the multitemporal changes of the single crop plot 147 from the dataset including multiple corn plants. Each point cloud is georeferenced with centimeter accuracy and ICP fine-registered over time to ensure a temporal alignment. More crop plots will be added in the future.
 
 ![Temporal Slider Demo](demo_slider.gif)
+
+## Dataset Content
+
+<figure style="width: 100% !important; margin: 0 !important; padding: 0 !important; clear: both !important;">
+  <img src="./images/fieldpheno4d_orthophoto.png" 
+    alt="Teaser Image" 
+    style="width: 100% !important; height: auto !important; display: block !important;">
+</figure>
+
+The crop plots are measured by the field robot platform as described above from May to September during the vegetation period 2023 at an experimental field close to Bonn, Germany. The following timetable summarizes the days of measurements for each crop plot.
+
+<figure style="width: 100% !important; margin: 0 !important; padding: 0 !important; clear: both !important;">
+  <img src="./images/fieldpheno4d_timetable.png" 
+    alt="Teaser Image" 
+    style="width: 100% !important; height: auto !important; display: block !important;">
+</figure>
+
 
 ## Download data
 
@@ -45,3 +62,8 @@ source venv/bin/activate
 python app.py
 ```
 3. Open `http://localhost:5000` in your browser.
+
+
+## Acknowledgments
+
+This work has been funded by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) under Germany’s Excellence Strategy, EXC-2070 – 390732324 – PhenoRob.
