@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FieldPheno4D Dataset</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>FieldPheno4D Dataset</h1>
+            <p>High-quality and Multitemporal 3D point clouds of Multiple Crops captured in the field</p>
+        </div>
+        <button id="theme-toggle" class="theme-toggle">Toggle Dark Mode</button>
+    </header>
+
+    <main>
+        <div id="tabs-container" class="tabs">
+            <!-- Tabs injected by JS -->
+        </div>
+
+        <section class="viewer-container">
+            <div class="slider-container">
+                <label for="time-slider">Date: <span id="current-date-label"></span></label>
+                <div class="slider-wrapper">
+                    <input type="range" id="time-slider" min="0" max="0" value="0" step="1">
+                    <div id="slider-ticks" class="slider-ticks"></div>
+                </div>
+            </div>
+
+            <div class="image-viewer">
+                <div class="viewer-column viewer-left">
+                    <div class="figure-container">
+                        <img id="nadir-view" src="" alt="Select a plot and date to view nadir image">
+                    </div>
+                    <div class="figure-container">
+                        <img id="side-xz-view" src="" alt="Select a plot and date to view side XZ image">
+                    </div>
+                </div>
+                <div class="viewer-column viewer-right">
+                    <div class="figure-container figure-tall">
+                        <img id="side-yz-view" src="" alt="Select a plot and date to view side YZ image">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
