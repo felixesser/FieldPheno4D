@@ -11,6 +11,15 @@ This web application provides an interactive viewer for the FieldPheno4D dataset
 - **Image Visualization**: Real-time display of nadir-view generated from the point cloud for the selected date.
 - **Light/Dark Mode**: An integrated toggle for comfortable viewing across different lighting conditions.
 
+## Handling the Repository and Data
+The application expects datasets to be located at `/data/FieldPheno4D`. However, for development and running the web application locally without the full dataset, the application will automatically serve mock entries for testing. 
+
+To use local images for GitHub Pages or local previewing, you can structure your repository by placing sample files in a local folder (e.g., `./data/FieldPheno4D/...`) and updating the `DATA_DIR` variable in the backend if you are migrating from this Flask setup to a static GitHub Pages deployment. Please note that placing large point cloud images directly in the repository is not recommended; stick to minimal, compressed sample images for display purposes.
+
+## Visualization on GitHub
+**Is it possible to include the interactive slider directly in GitHub?**
+No, GitHub's markdown file rendering does not support interactive HTML/JavaScript or custom CSS required for a functional slider. To visualize the dataset directly in the repository's `README.md`, you should use an **animated GIF** or **side-by-side static thumbnail images** demonstrating the temporal effects or plot variations. 
+
 ## Project Structure
 - `app.py`: Flask backend serving the metadata and static views.
 - `templates/`: HTML templates for the frontend.
