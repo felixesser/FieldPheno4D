@@ -4,7 +4,7 @@ from flask import Flask, render_template, jsonify, send_from_directory
 app = Flask(__name__)
 
 # Base directory for the dataset
-DATA_DIR = '/data/FieldPheno4D'
+DATA_DIR = './data/FieldPheno4D'
 
 @app.route('/')
 def index():
