@@ -20,7 +20,7 @@ To use local images for GitHub Pages or local previewing, you can structure your
 **Is it possible to include the interactive slider directly in GitHub?**
 No, GitHub's markdown file rendering does not support interactive HTML/JavaScript or custom CSS required for a functional slider. To visualize the dataset directly in the repository's `README.md`, you should use an **animated GIF** or **side-by-side static thumbnail images** demonstrating the temporal effects or plot variations. 
 
-Here is an example visualization of the temporal changes for plot P146 over time:
+Here is an example visualization of the temporal changes for plot P147 over time:
 
 ![Temporal Slider Demo](demo_slider.gif)
 

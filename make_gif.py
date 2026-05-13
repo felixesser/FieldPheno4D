@@ -2,7 +2,7 @@ import glob
 from PIL import Image
 import os
 
-img_dir = 'data/FieldPheno4D/P146/dem/png/combined/'
+img_dir = 'data/FieldPheno4D/P147/dem/png/combined/'
 images = []
 if os.path.exists(img_dir):
     files = sorted(glob.glob(os.path.join(img_dir, '*.png')))
