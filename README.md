@@ -12,6 +12,10 @@ Below is an **animated .gif demo** showing the multitemporal changes of the sing
 
 ![Temporal Slider Demo](demo_slider.gif)
 
+## Download data
+
+> **Note:** All point clouds and additional metadata will be made avaiable on [Bonndata](https://bonndata.uni-bonn.de/).
+
 ## Local Website Viewer
 
 The repository also includes a web application to interactively browse different crop plots (PXXX) and view nadir and side views of the 3D point clouds across a temporal slider.
