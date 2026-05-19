@@ -15,7 +15,8 @@ source venv/bin/activate
 echo "Installing dependencies..."
 pip install --upgrade pip
 pip install -r requirements.txt
+pip install -e lib/pointcloudlib
 
 echo "Installation complete. To run the server, use:"
 echo "source venv/bin/activate"
-echo "python app.py"
+echo "python3 scripts/run_website.py"

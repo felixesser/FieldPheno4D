@@ -1,0 +1,16 @@
+In the context of climate change, detailed knowledge of plant growth and crop responses to environmental conditions is essential for crop breeding, precision agriculture,
+and sustainable resource management. Monitoring plant development throughout the growing season requires accurate determination of phenotypic traits,
+with classical parameters such as plant height, canopy cover, and leaf area index serving as crucial indicators. 
+Traditional methods for measuring these traits are labor-intensive and often destructive, limiting their application in large-scale studies.
+Modern field phenotyping platforms equipped with sensors such as RGB cameras and laser scanners are increasingly deployed due to their potential for automation and high-throughput phenotyping.
+However, most existing systems lack the reconstruction quality necessary to determine complex traits at the single-plant and plant-organ scale,
+or to extract plant skeletons-capabilities that are becoming increasingly important in contemporary phenotyping approaches. 
+
+This dataset contains high-quality 4D point clouds of multiple crop species (bean, wheat, maize, sugar beet, and potato) acquired using a specialized field phenotyping robot.
+The platform is equipped with two industrial-grade laser triangulation scanners (micrometer precision) and a centimeter-accurate georeferencing system comprising RTK GNSS and an inertial navigation system, enabling precise multi-temporal registration of 3D point clouds.
+High quality is defined by sub-millimeter point precision, sub-millimeter spatial resolution, centimeter-level georeferencing accuracy, and high consistency between the two scanners. 
+The dataset is organized into individual crop patches containing single crop rows of each species, scanned systematically by the robot.
+Multiple scans of individual crop rows are used to increase point cloud completeness.
+This dataset enables multi-temporal phenotypic trait determination at the single plant-organ scale under field conditions.
+The key novelty lies in the combination of field-based acquisition with high-quality reconstruction,
+addressing the limitations of existing datasets that are primarily restricted to indoor environments under controlled, non-representative conditions.

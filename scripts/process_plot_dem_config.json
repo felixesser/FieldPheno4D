@@ -1,0 +1,22 @@
+{
+  "dataset_root": "data/FieldPheno4D",
+  "output_root": "data/FieldPheno4Dimg",
+  "output_dir": "dem",
+  "dxy": 0.002,
+  "max_plane_points": 2000000,
+  "epsg": 32632,
+  "nodata": -9999.0,
+  "seed": 13,
+  "preview": true,
+  "geotiff": false,
+  "apply_sor": false,
+  "write_pointclouds": false,
+  "height_scalarfield_name": "height",
+  "pca_rotate": true,
+  "pca_rotate_max_points": 5000000,
+  "z_ref": "global-min",
+  "preview_cmap": "turbo",
+  "agg": "max",
+  "max_grid_cells": null,
+  "dem_max_points": null
+}

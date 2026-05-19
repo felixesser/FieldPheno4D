@@ -38,9 +38,9 @@ The crop plots are measured by the field robot platform as described above from 
 The repository also includes a web application to interactively browse different crop plots (PXXX) and view nadir and side views of the 3D point clouds across a temporal slider.
 
 ### Project Structure
-- `app.py`: Flask backend serving the metadata and static views.
-- `templates/`: HTML templates for the frontend.
-- `static/`: CSS and JavaScript files for interactivity and styling.
+- `website/app.py`: Flask backend serving the metadata and static views.
+- `website/templates/`: HTML templates for the frontend.
+- `website/static/`: CSS and JavaScript files for interactivity and styling.
 - `./data/FieldPheno4D/`: Target directory for the dataset (expected format: `./data/FieldPheno4D/<plot_id>/<date>/image.png`).
 
 ## Installation
@@ -51,6 +51,23 @@ Run the provided installation script to create a virtual environment and install
 ./installation.sh
 ```
 
+This also installs the local `pointcloudlib` clone from `lib/pointcloudlib` so the DEM preview script can import it directly.
+
+## DEM Preview Script
+
+The repository includes `scripts/generate_fieldpheno4d_dem.py`, which wraps `pointcloudlib.dem.process_plot_dem` and reads its defaults from `scripts/process_plot_dem_config.json`.
+
+Example:
+
+```bash
+source venv/bin/activate
+python3 scripts/generate_fieldpheno4d_dem.py data/FieldPheno4D --output-root data/FieldPheno4Dimg
+```
+
+The DEM pipeline writes previews into the dataset plot folder, for example `.../P144/reg_all/dem/png/...`, and mirrors them into `FieldPheno4Dimg` when requested. GeoTIFF generation is disabled by default to keep the run focused on PNG previews.
+
+If you want to add the computed height scalar back into the source LAS files during processing, enable `write_pointclouds` in `scripts/process_plot_dem_config.json`.
+
 ## Running the Application
 
 1. Activate the environment:
@@ -59,7 +76,13 @@ source venv/bin/activate
 ```
 2. Start the flask application:
 ```bash
-python app.py
+python3 scripts/run_website.py
+```
+
+To build a GIF from one plot folder, use:
+
+```bash
+python3 scripts/make_gif.py P147 --images-root data/FieldPheno4Dimg
 ```
 3. Open `http://localhost:5000` in your browser.
 
