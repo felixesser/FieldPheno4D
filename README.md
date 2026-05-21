@@ -88,16 +88,16 @@ python3 scripts/make_gif.py P147 --images-root data/FieldPheno4Dimg
 
 ## Publishing on GitHub Pages
 
-The website also has a static export path for GitHub Pages.
+The website has a single static export path for GitHub Pages.
 
 1. Generate a GitHub-Pages-ready site bundle locally if you want to test it first:
 ```bash
 ./venv/bin/python3 scripts/build_github_pages.py
 ```
 2. Push the repository to your public GitHub account.
-3. In the repository settings, set GitHub Pages to deploy from the `main` branch and the `/docs` folder.
+3. In the repository settings, set GitHub Pages to deploy with GitHub Actions.
 
-The build script now prepares both `site/` and `docs/`. If you prefer GitHub Actions, the workflow at `.github/workflows/pages.yml` still publishes `site/` automatically on every push to `main`.
+The build script prepares `site/` only. The workflow at `.github/workflows/pages.yml` publishes `site/` automatically on every push to `main`.
 
 
 ## Acknowledgments
