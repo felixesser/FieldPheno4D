@@ -4,6 +4,9 @@ __pycache__/
 *$py.class
 /site/
 
+# Ignore generated docs output (we publish from `site/` only)
+docs/
+
 
 # Virtual environments
 venv/

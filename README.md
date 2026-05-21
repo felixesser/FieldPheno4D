@@ -10,7 +10,7 @@ The dataset was gathered using a custom **Field Robot for High-throughput and Hi
 ## Dataset Teaser Visualization
 Below is an **animated .gif demo** showing the multitemporal changes of the single crop plot 147 from the dataset including multiple corn plants. Each point cloud is georeferenced with centimeter accuracy and ICP fine-registered over time to ensure a temporal alignment. More crop plots will be added in the future.
 
-![Temporal Slider Demo](demo_slider.gif)
+![Temporal Slider Demo](demo_dem.gif)
 
 The crop plots are measured by the field robot platform as described above from May to September during the vegetation period 2023 at an experimental field close to Bonn, Germany. The following timetable summarizes the days of measurements for each crop plot.
 
@@ -59,7 +59,28 @@ python3 scripts/generate_fieldpheno4d_dem.py /mnt/d/FieldPheno4D/pointclouds --p
 ## Update GitHub Webiste
 
 ```bash
+The website uses a single canonical storage for generated DEM PNGs and a single publish folder for GitHub Pages.
+
+- Canonical DEM PNG storage: `data/FieldPheno4Dimg`
+  - This folder contains the generated DEM preview PNGs per plot. It is the single source of truth for DEM images and should be produced by running the DEM pipeline locally (or by your preprocessing jobs).
+  - Do NOT commit large generated images into the repository; they are mirrored into the site during the static site build instead.
+
+- Publish target: `site/` (built artifact)
+  - The static site is generated into `site/` by `scripts/build_github_pages.py` and then published by the GitHub Actions workflow at `.github/workflows/pages.yml`.
+  - `site/` and other generated outputs are listed in `.gitignore` so they are not tracked by Git. This avoids duplication and keeps the repo small.
+
+How to test locally before pushing:
+```bash
+source venv/bin/activate
 ./venv/bin/python3 scripts/build_github_pages.py
+# open site/index.html in a browser or serve it locally
+```
+
+How to deploy (no need to commit `site/`):
+1. Push your source changes to `main`.
+2. The `Deploy GitHub Pages` workflow is configured to run on push and will build and publish `site/` automatically.
+
+If you want to trigger a fresh publish without pushing, use the workflow dispatch (UI, `gh` CLI, or GitHub REST API). See the earlier section for details.
 ```
 
 ## Acknowledgments
