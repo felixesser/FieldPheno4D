@@ -12,14 +12,6 @@ Below is an **animated .gif demo** showing the multitemporal changes of the sing
 
 ![Temporal Slider Demo](demo_slider.gif)
 
-## Dataset Content
-
-<figure style="width: 100% !important; margin: 0 !important; padding: 0 !important; clear: both !important;">
-  <img src="./images/fieldpheno4d_orthophoto.png" 
-    alt="Teaser Image" 
-    style="width: 100% !important; height: auto !important; display: block !important;">
-</figure>
-
 The crop plots are measured by the field robot platform as described above from May to September during the vegetation period 2023 at an experimental field close to Bonn, Germany. The following timetable summarizes the days of measurements for each crop plot.
 
 <figure style="width: 100% !important; margin: 0 !important; padding: 0 !important; clear: both !important;">
@@ -53,7 +45,7 @@ Run the provided installation script to create a virtual environment and install
 
 This also installs the local `pointcloudlib` clone from `lib/pointcloudlib` so the DEM preview script can import it directly.
 
-## DEM Preview Script
+## DEM Generation Script
 
 The repository includes `scripts/generate_fieldpheno4d_dem.py`, which wraps `pointcloudlib.dem.process_plot_dem` and reads its defaults from `scripts/process_plot_dem_config.json`.
 
@@ -61,44 +53,14 @@ Example:
 
 ```bash
 source venv/bin/activate
-python3 scripts/generate_fieldpheno4d_dem.py data/FieldPheno4D --output-root data/FieldPheno4Dimg
+python3 scripts/generate_fieldpheno4d_dem.py /mnt/d/FieldPheno4D/pointclouds --plots PlotXX
 ```
 
-The DEM pipeline writes previews into the dataset plot folder, for example `.../P144/reg_all/dem/png/...`, and mirrors them into `FieldPheno4Dimg` when requested. GeoTIFF generation is disabled by default to keep the run focused on PNG previews.
+## Update GitHub Webiste
 
-If you want to add the computed height scalar back into the source LAS files during processing, enable `write_pointclouds` in `scripts/process_plot_dem_config.json`.
-
-## Running the Application
-
-1. Activate the environment:
-```bash
-source venv/bin/activate
-```
-2. Start the flask application:
-```bash
-python3 scripts/run_website.py
-```
-
-To build a GIF from one plot folder, use:
-
-```bash
-python3 scripts/make_gif.py P147 --images-root data/FieldPheno4Dimg
-```
-3. Open `http://localhost:5000` in your browser.
-
-## Publishing on GitHub Pages
-
-The website has a single static export path for GitHub Pages.
-
-1. Generate a GitHub-Pages-ready site bundle locally if you want to test it first:
 ```bash
 ./venv/bin/python3 scripts/build_github_pages.py
 ```
-2. Push the repository to your public GitHub account.
-3. In the repository settings, set GitHub Pages to deploy with GitHub Actions.
-
-The build script prepares `site/` only. The workflow at `.github/workflows/pages.yml` publishes `site/` automatically on every push to `main`.
-
 
 ## Acknowledgments
 
