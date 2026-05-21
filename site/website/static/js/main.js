@@ -52,12 +52,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const plotNumMatch = plot.match(/Plot(\d{1,3})$/);
         if (plotNumMatch) {
             const idx = plotNumMatch[1].padStart(2, '0');
-            candidates.push(`/data/${plot}/P${idx}_orthophoto.png`);
+            candidates.push(`${dataBase}/${plot}/P${idx}_orthophoto.png`);
         }
         // 2) Try direct P*-orthophoto (for plots already named P###)
-        candidates.push(`/data/${plot}/${plot}_orthophoto.png`);
+        candidates.push(`${dataBase}/${plot}/${plot}_orthophoto.png`);
         // 3) try common fallback name
-        candidates.push(`/data/${plot}/${plot.replace(/[^0-9]/g, '')}_orthophoto.png`);
+        candidates.push(`${dataBase}/${plot}/${plot.replace(/[^0-9]/g, '')}_orthophoto.png`);
         // finally fall back to embedded dummy
         candidates.push(`${assetBase}/images/dummy_teaser.svg`);
 
