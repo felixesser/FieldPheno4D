@@ -79,16 +79,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const teaserBody = document.createElement('div');
         teaserBody.className = 'plot-teaser-body';
 
+        const cropLabel = linkData && linkData.species ? linkData.species : '';
         const title = document.createElement('h3');
         title.className = 'plot-title';
-        title.textContent = plot;
+        const plotLabel = document.createElement('span');
+        plotLabel.className = 'plot-title-plot';
+        plotLabel.textContent = `${plot}: `;
+        title.appendChild(plotLabel);
+        const speciesLabel = document.createElement('span');
+        speciesLabel.className = 'plot-title-species';
+        speciesLabel.textContent = cropLabel || 'Unknown';
+        title.appendChild(speciesLabel);
         teaserBody.appendChild(title);
 
         // (collapse/summary removed) — viewer is always visible now
 
         const meta = document.createElement('div');
         meta.className = 'plot-meta';
-        const cropLabel = linkData && linkData.species ? linkData.species : '';
         meta.textContent = cropLabel
             ? `Crop: ${cropLabel} · ${dates.length} available point clouds`
             : `${dates.length} available point clouds`;

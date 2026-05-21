@@ -42,6 +42,8 @@ def main() -> int:
     _copy_file(output_path, docs_root / "index.html")
     _copy_tree(repo_root / "website" / "static", site_root / "website" / "static")
     _copy_tree(repo_root / "website" / "static", docs_root / "website" / "static")
+    _copy_tree(repo_root / "images", site_root / "images")
+    _copy_tree(repo_root / "images", docs_root / "images")
 
     data_source = repo_root / "data" / "FieldPheno4Dimg"
     data_target = site_root / "data"

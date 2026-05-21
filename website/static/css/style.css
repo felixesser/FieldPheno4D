@@ -116,8 +116,24 @@ header {
 
 .plot-teaser-body { display:flex; flex-direction:column; gap: 0.55rem; }
 .plot-title { margin: 0; font-size: 1.25rem; color: var(--text-color); }
+.plot-title { font-weight: 400; }
+.plot-title-plot,
+.plot-title-species { font-weight: 700; }
 .plot-meta { color: var(--muted-color); font-size: 1.2rem; }
 .plot-link-wrap { margin-top: 0.3rem; }
+
+.timetable-figure {
+    margin: 0;
+}
+
+.timetable-figure img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 14px;
+    border: 1px solid var(--panel-border);
+    box-shadow: var(--shadow);
+}
 
 .download-link-box { margin: 0 0 1rem 0; }
 .download-link-card {
@@ -427,6 +443,8 @@ input[type="range"]::-moz-range-thumb { width: 32px; height: 32px; }
     .tabs { width: 100%; gap: 0.75rem; }
     .tab { font-size: 0.9rem; padding: 0.5rem 0.8rem; }
     .slider-container { width: 100%; margin-bottom: 4rem; }
+    .tick-label { display: none; }
+    .slider-ticks { height: 16px; top: calc(100% + 14px); }
 
     .theme-toggle {
         position: static;
