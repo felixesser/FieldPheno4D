@@ -86,6 +86,19 @@ python3 scripts/make_gif.py P147 --images-root data/FieldPheno4Dimg
 ```
 3. Open `http://localhost:5000` in your browser.
 
+## Publishing on GitHub Pages
+
+The website also has a static export path for GitHub Pages.
+
+1. Generate a GitHub-Pages-ready `index.html` in the repository root:
+```bash
+./venv/bin/python3 scripts/build_github_pages.py
+```
+2. Push the repository to your public GitHub account.
+3. In the repository settings, enable GitHub Pages from the repository root.
+
+The exported page uses the same static assets and dataset previews, so the interactive plot viewer works without the Flask backend.
+
 
 ## Acknowledgments
 

@@ -1,18 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('theme-toggle');
     const plotsGrid = document.getElementById('plots-grid');
+    const assetBase = (window.ASSET_BASE || '/static').replace(/\/$/, '');
+    const dataBase = (window.DATA_BASE || '/data').replace(/\/$/, '');
 
     themeToggle.addEventListener('click', () => {
         const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
         document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
     });
 
-    fetch('/api/plots')
-        .then(response => response.json())
-        .then(data => {
-            const plots = Object.keys(data);
-            renderPlotCards(plots, data);
-        });
+    const renderFromData = (data) => {
+        const plots = Object.keys(data || {});
+        renderPlotCards(plots, data || {});
+    };
+
+    if (window.PLOTS_DATA && Object.keys(window.PLOTS_DATA).length > 0) {
+        renderFromData(window.PLOTS_DATA);
+    } else {
+        fetch('api/plots')
+            .then(response => response.json())
+            .then(data => {
+                renderFromData(data);
+            })
+            .catch(() => {
+                renderFromData({});
+            });
+    }
 
     function renderPlotCards(plots, dataset) {
         if (!plotsGrid) return;
@@ -46,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 3) try common fallback name
         candidates.push(`/data/${plot}/${plot.replace(/[^0-9]/g, '')}_orthophoto.png`);
         // finally fall back to embedded dummy
-        candidates.push('/static/images/dummy_teaser.svg');
+        candidates.push(`${assetBase}/images/dummy_teaser.svg`);
 
         let candIndex = 0;
         const tryNextCandidate = () => {
@@ -272,7 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const date = dates[safeIndex];
         currentDateLabel.textContent = formatDateString(date);
 
-        const combinedUrl = `/data/${plot}/dem/png/combined/${date}_combined.png`;
+        const combinedUrl = `${dataBase}/${plot}/dem/png/combined/${date}_combined.png`;
         state.loadingCombinedImage = true;
 
         nadirView.onload = () => {
@@ -289,9 +302,9 @@ document.addEventListener('DOMContentLoaded', () => {
         nadirView.onerror = () => {
             nadirView.onerror = null;
             state.loadingCombinedImage = false;
-            nadirView.src = `/data/${plot}/dem/png/nadir/${date}.png`;
-            sideXzView.src = `/data/${plot}/dem/png/side_xz/${date}_side_xz.png`;
-            sideYzView.src = `/data/${plot}/dem/png/side_yz/${date}_side_yz.png`;
+            nadirView.src = `${dataBase}/${plot}/dem/png/nadir/${date}.png`;
+            sideXzView.src = `${dataBase}/${plot}/dem/png/side_xz/${date}_side_xz.png`;
+            sideYzView.src = `${dataBase}/${plot}/dem/png/side_yz/${date}_side_yz.png`;
             if (imageViewer) imageViewer.classList.remove('combined-image');
             if (viewerRight) viewerRight.style.display = '';
             if (nadirContainer) {

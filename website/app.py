@@ -49,71 +49,41 @@ def _load_download_links() -> dict[str, dict[str, str]]:
     return links
 
 
-template_folder = str(Path(__file__).resolve().parent / "templates")
-static_folder = str(Path(__file__).resolve().parent / "static")
-app = Flask(__name__, template_folder=template_folder, static_folder=static_folder)
-
-
-@app.route("/")
-def index():
-    # Load dataset description from texts/description.txt and convert to HTML paragraphs
-    desc_path = Path(__file__).resolve().parent / "texts" / "description.txt"
-    description_html = ""
+def _load_text_html(filename: str) -> Markup:
+    text_path = Path(__file__).resolve().parent / "texts" / filename
+    html = ""
     try:
-        if desc_path.exists():
-            raw = desc_path.read_text(encoding="utf-8").strip()
-            if raw:
-                paragraphs = [f"<p>{p.strip()}</p>" for p in raw.split("\n\n") if p.strip()]
-                description_html = Markup("\n".join(paragraphs))
+        if text_path.exists():
+            raw_text = text_path.read_text(encoding="utf-8").strip()
+            if raw_text:
+                paragraphs = [f"<p>{paragraph.strip()}</p>" for paragraph in raw_text.split("\n\n") if paragraph.strip()]
+                html = Markup("\n".join(paragraphs))
     except Exception:
-        description_html = ""
+        html = ""
+    return html
 
-    # Load dataset title from texts/title.txt (fallback to a default)
+
+def _load_title_text() -> str:
     title_path = Path(__file__).resolve().parent / "texts" / "title.txt"
     title_text = "FieldPheno4D Dataset"
     try:
         if title_path.exists():
-            t = title_path.read_text(encoding="utf-8").strip()
-            if t:
-                title_text = t
+            raw_title = title_path.read_text(encoding="utf-8").strip()
+            if raw_title:
+                title_text = raw_title
     except Exception:
         pass
-
-    # Load acknowledgments text from texts/acknowledgments.txt
-    ack_path = Path(__file__).resolve().parent / "texts" / "acknowledgments.txt"
-    acknowledgments_html = ""
-    try:
-        if ack_path.exists():
-            raw_ack = ack_path.read_text(encoding="utf-8").strip()
-            if raw_ack:
-                paragraphs = [f"<p>{p.strip()}</p>" for p in raw_ack.split("\n\n") if p.strip()]
-                acknowledgments_html = Markup("\n".join(paragraphs))
-    except Exception:
-        acknowledgments_html = ""
-
-    download_links = _load_download_links()
-
-    return render_template(
-        "index.html",
-        description=description_html,
-        title=title_text,
-        acknowledgments=acknowledgments_html,
-        download_links=download_links,
-    )
+    return title_text
 
 
-@app.route("/api/plots")
-def get_plots():
-    """Return available plots and temporal labels for the viewer."""
+def _build_plots_data() -> dict[str, list[str]]:
     data: dict[str, list[str]] = {}
     data_dir = _resolve_data_dir()
     if not data_dir.exists():
-        return jsonify(
-            {
-                "P001": ["2023-05-01", "2023-05-15", "2023-06-01"],
-                "P002": ["2023-05-02", "2023-05-16", "2023-06-02"],
-            }
-        )
+        return {
+            "P001": ["2023-05-01", "2023-05-15", "2023-06-01"],
+            "P002": ["2023-05-02", "2023-05-16", "2023-06-02"],
+        }
 
     global_combined = data_dir / "combined"
     if global_combined.is_dir():
@@ -121,7 +91,7 @@ def get_plots():
             if file.suffix.lower() == ".png":
                 data[file.stem] = ["combined"]
         if data:
-            return jsonify(data)
+            return data
 
     for plot_dir in sorted(data_dir.iterdir()):
         if not plot_dir.is_dir():
@@ -156,7 +126,36 @@ def get_plots():
             if dates:
                 data[plot_dir.name] = sorted(dates)
 
-    return jsonify(data)
+    return data
+
+
+def _build_page_context(*, asset_base: str, data_base: str) -> dict[str, object]:
+    return {
+        "asset_base": asset_base.rstrip("/"),
+        "data_base": data_base.rstrip("/"),
+        "description": _load_text_html("description.txt"),
+        "title": _load_title_text(),
+        "acknowledgments": _load_text_html("acknowledgments.txt"),
+        "download_links": _load_download_links(),
+        "plots_data": _build_plots_data(),
+    }
+
+
+template_folder = str(Path(__file__).resolve().parent / "templates")
+static_folder = str(Path(__file__).resolve().parent / "static")
+app = Flask(__name__, template_folder=template_folder, static_folder=static_folder)
+
+
+@app.route("/")
+def index():
+    context = _build_page_context(asset_base="/static", data_base="/data")
+    return render_template("index.html", **context)
+
+
+@app.route("/api/plots")
+def get_plots():
+    """Return available plots and temporal labels for the viewer."""
+    return jsonify(_build_plots_data())
 
 
 @app.route("/data/<path:filename>")

@@ -232,6 +232,19 @@ header {
 
 .ack-text, .ack-text p { font-size: 1.2rem; color: var(--muted-color); line-height: 1.6; }
 
+/* Ensure consistent body text size inside all page blocks (exclude headings) */
+.block .block-inner p,
+.block .block-inner .license-text,
+.block .block-inner .plot-meta,
+.block .block-inner .download-link-species,
+.block .block-inner .ack-text,
+.block .block-inner .download-link-card,
+.block .block-inner .download-link-card--missing {
+    font-size: 1.2rem;
+    color: var(--muted-color);
+    line-height: 1.6;
+}
+
 .block .slider-container { width: 100%; box-sizing: border-box; }
 .block .slider-wrapper { max-width: 100%; box-sizing: border-box; }
 .block .image-viewer { width: 100%; box-sizing: border-box; margin: 0; }

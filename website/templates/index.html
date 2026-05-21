@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FieldPheno4D Dataset</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset_base }}/css/style.css">
 </head>
 <body>
     <header>
@@ -39,19 +39,32 @@
                 <div class="ack-text">{{ acknowledgments|safe }}</div>
             </div>
         </section>
+
+        <!-- Block 4: License -->
+        <section class="block license">
+            <div class="block-inner">
+                <h2>License</h2>
+                <div class="license-text">
+                    <p>The dataset is distributed under the Creative Commons <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a> license, which means you are allowed to share and adapt the dataset as long as you attribute our work. Please see the license webpage for detailed information on the restrictions and terms.</p>
+                </div>
+            </div>
+        </section>
     </main>
 
     <script>
+        window.ASSET_BASE = {{ asset_base | tojson }};
+        window.DATA_BASE = {{ data_base | tojson }};
         window.DOWNLOAD_LINKS = {{ download_links | tojson }};
+        window.PLOTS_DATA = {{ plots_data | tojson }};
     </script>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ asset_base }}/js/main.js"></script>
     <div class="site-badge" aria-hidden="true">
         <div class="site-badge-logos">
             <div class="site-badge-logo site-badge-logo--left">
-                <img src="{{ url_for('static', filename='images/logo_phenorob.png') }}" alt="PHENOROB logo">
+                <img src="{{ asset_base }}/images/logo_phenorob.png" alt="PHENOROB logo">
             </div>
             <div class="site-badge-logo site-badge-logo--right">
-                <img src="{{ url_for('static', filename='images/logo_unibonn.png') }}" alt="University of Bonn logo">
+                <img src="{{ asset_base }}/images/logo_unibonn.png" alt="University of Bonn logo">
             </div>
         </div>
         <div class="copyright">Copyright © 2026 University of Bonn</div>
