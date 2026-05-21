@@ -95,9 +95,9 @@ The website also has a static export path for GitHub Pages.
 ./venv/bin/python3 scripts/build_github_pages.py
 ```
 2. Push the repository to your public GitHub account.
-3. In the repository settings, set GitHub Pages to deploy from GitHub Actions.
+3. In the repository settings, set GitHub Pages to deploy from the `main` branch and the `/docs` folder.
 
-The workflow at `.github/workflows/pages.yml` builds the static site into `site/` and publishes it automatically on every push to `main`.
+The build script now prepares both `site/` and `docs/`. If you prefer GitHub Actions, the workflow at `.github/workflows/pages.yml` still publishes `site/` automatically on every push to `main`.
 
 
 ## Acknowledgments

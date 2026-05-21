@@ -27,7 +27,9 @@ def _copy_file(src: Path, dst: Path) -> None:
 def main() -> int:
     output_path = repo_root / "index.html"
     site_root = repo_root / "site"
+    docs_root = repo_root / "docs"
     site_root.mkdir(parents=True, exist_ok=True)
+    docs_root.mkdir(parents=True, exist_ok=True)
     context = _build_page_context(asset_base="website/static", data_base="data")
 
     with app.app_context():
@@ -37,7 +39,9 @@ def main() -> int:
     print(f"Wrote {output_path}")
 
     _copy_file(output_path, site_root / "index.html")
+    _copy_file(output_path, docs_root / "index.html")
     _copy_tree(repo_root / "website" / "static", site_root / "website" / "static")
+    _copy_tree(repo_root / "website" / "static", docs_root / "website" / "static")
 
     data_source = repo_root / "data" / "FieldPheno4Dimg"
     data_target = site_root / "data"
@@ -46,9 +50,12 @@ def main() -> int:
         for plot_dir in sorted(data_source.iterdir()):
             if plot_dir.is_dir():
                 _copy_tree(plot_dir, data_target / plot_dir.name)
+                _copy_tree(plot_dir, docs_root / "data" / plot_dir.name)
 
     (site_root / ".nojekyll").write_text("", encoding="utf-8")
+    (docs_root / ".nojekyll").write_text("", encoding="utf-8")
     print(f"Prepared GitHub Pages site in {site_root}")
+    print(f"Prepared GitHub Pages docs in {docs_root}")
     return 0
 
 

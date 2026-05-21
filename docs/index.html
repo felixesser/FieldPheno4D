@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FieldPheno4D Dataset</title>
+    <link rel="stylesheet" href="website/static/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>FieldPheno4D: The Multi-temporal, Multi-Crop dataset of High-Quality 3D Point Clouds captured in the Field</h1>
+            <div class="dataset-description"><p>In the context of climate change, detailed knowledge of plant growth and crop responses to environmental conditions is essential for crop breeding, precision agriculture,
+and sustainable resource management. Monitoring plant development throughout the growing season requires accurate determination of phenotypic traits,
+with classical parameters such as plant height, canopy cover, and leaf area index serving as crucial indicators. 
+Traditional methods for measuring these traits are labor-intensive and often destructive, limiting their application in large-scale studies.
+Modern field phenotyping platforms equipped with sensors such as RGB cameras and laser scanners are increasingly deployed due to their potential for automation and high-throughput phenotyping.
+However, most existing systems lack the reconstruction quality necessary to determine complex traits at the single-plant and plant-organ scale,
+or to extract plant skeletons-capabilities that are becoming increasingly important in contemporary phenotyping approaches.</p>
+<p>This dataset contains high-quality 4D point clouds of multiple crop species (bean, wheat, maize, sugar beet, and potato) acquired using a specialized field phenotyping robot.
+The platform is equipped with two industrial-grade laser triangulation scanners (micrometer precision) and a centimeter-accurate georeferencing system comprising RTK GNSS and an inertial navigation system, enabling precise multi-temporal registration of 3D point clouds.
+High quality is defined by sub-millimeter point precision, sub-millimeter spatial resolution, centimeter-level georeferencing accuracy, and high consistency between the two scanners. 
+The dataset is organized into individual crop patches containing single crop rows of each species, scanned systematically by the robot.
+Multiple scans of individual crop rows are used to increase point cloud completeness.
+This dataset enables multi-temporal phenotypic trait determination at the single plant-organ scale under field conditions.
+The key novelty lies in the combination of field-based acquisition with high-quality reconstruction,
+addressing the limitations of existing datasets that are primarily restricted to indoor environments under controlled, non-representative conditions.</p></div>
+        </div>
+        <button id="theme-toggle" class="theme-toggle">Toggle theme</button>
+    </header>
+
+    <main>
+        <!-- Block 1: Highlights -->
+        <section class="block highlights">
+            <div class="block-inner">
+                <h2>Highlights</h2>
+                <div class="dataset-description">This section is reserved for a short highlight summary.</div>
+            </div>
+        </section>
+
+        <!-- Block 2: 3D point clouds (tabs + viewer) -->
+        <section class="block pointclouds">
+            <div class="block-inner">
+                <h2>3D point clouds</h2>
+                <div id="plots-grid" class="plots-grid"></div>
+            </div>
+        </section>
+
+        <!-- Block 3: Acknowledgments -->
+        <section class="block acknowledgments">
+            <div class="block-inner">
+                <h2>Acknowledgments</h2>
+                <div class="ack-text"><p>This work has been funded by been funded by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) under Germany's Excellence Strategy, EXC-2070 - 390732324 (PhenoRob).</p></div>
+            </div>
+        </section>
+
+        <!-- Block 4: License -->
+        <section class="block license">
+            <div class="block-inner">
+                <h2>License</h2>
+                <div class="license-text">
+                    <p>The dataset is distributed under the Creative Commons <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a> license, which means you are allowed to share and adapt the dataset as long as you attribute our work. Please see the license webpage for detailed information on the restrictions and terms.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        window.ASSET_BASE = "website/static";
+        window.DATA_BASE = "data";
+        window.DOWNLOAD_LINKS = {"Plot01": {"species": "Bean (Mallory)", "url": "TBD"}, "Plot02": {"species": "Wheat (Sorbas)", "url": "TBD"}, "Plot03": {"species": "Corn (Mirza)", "url": "TBD"}, "Plot04": {"species": "Corn (Popcorn Robust)", "url": "https://bonndata.uni-bonn.de/api/access/datafile/:persistentId?persistentId=doi:10.60507/FK2/HYI2DS/XUGOVZ"}, "Plot05": {"species": "Potato (Balena)", "url": "TBD"}, "Plot06": {"species": "Sugar Beet (-)", "url": "TBD"}, "Plot07": {"species": "Brassica (Carinata)", "url": "TBD"}};
+        window.PLOTS_DATA = {"Plot01": ["230516", "230525", "230530", "230601", "230606", "230613", "230619", "230621", "230625", "230629", "230705", "230711", "230719", "230726", "230801", "230807", "230815", "230821"], "Plot02": ["230525", "230530", "230601", "230606", "230613", "230619", "230621", "230625", "230629", "230705", "230711", "230719", "230726", "230801", "230807", "230815", "230821"], "Plot03": ["230601", "230606", "230613", "230619", "230621", "230625", "230629", "230705", "230711"], "Plot04": ["230601", "230606", "230613", "230619", "230621"]};
+    </script>
+    <script src="website/static/js/main.js"></script>
+    <div class="site-badge" aria-hidden="true">
+        <div class="site-badge-logos">
+            <div class="site-badge-logo site-badge-logo--left">
+                <img src="website/static/images/logo_phenorob.png" alt="PHENOROB logo">
+            </div>
+            <div class="site-badge-logo site-badge-logo--right">
+                <img src="website/static/images/logo_unibonn.png" alt="University of Bonn logo">
+            </div>
+        </div>
+        <div class="copyright">Copyright © 2026 University of Bonn</div>
+    </div>
+</body>
+</html>
