@@ -385,11 +385,55 @@ input[type="range"]::-moz-range-thumb { width: 32px; height: 32px; }
 .ack-text, .ack-text p { font-size: 1.2rem; color: var(--muted-color); line-height: 1.6; }
 
 @media (max-width:900px) {
-    header, .tabs, .viewer-container { padding-left:1rem; padding-right:1rem; }
-    header { flex-direction: column; align-items: center; }
-    .image-viewer { grid-template-columns: 1fr; width:100%; }
-    .tabs { width: 100%; }
-    .slider-container { width: 100%; }
+    html { font-size: 95%; }
+
+    header, .tabs, .viewer-container { padding-left:0.75rem; padding-right:0.75rem; }
+    header { flex-direction: column; align-items: stretch; gap: 0.75rem; padding-top: 1rem; }
+
+    .header-content,
+    .block,
+    .tabs,
+    .viewer-container,
+    .site-badge {
+        width: min(94vw, 100%);
+    }
+
+    .block .block-inner { padding: 1rem 1rem; }
+    .block h2 { font-size: 1.25rem; }
+
+    .plot-teaser {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+        padding: 0.85rem;
+    }
+
+    .plot-teaser img {
+        max-height: 42vh;
+    }
+
+    .plot-title { font-size: 1.1rem; }
+    .plot-meta,
+    .block .block-inner p,
+    .block .block-inner .license-text,
+    .block .block-inner .plot-meta,
+    .block .block-inner .download-link-species,
+    .block .block-inner .ack-text,
+    .block .block-inner .download-link-card,
+    .block .block-inner .download-link-card--missing {
+        font-size: 1rem;
+    }
+
+    .image-viewer { grid-template-columns: 1fr; width:100%; gap: 1rem; }
+    .tabs { width: 100%; gap: 0.75rem; }
+    .tab { font-size: 0.9rem; padding: 0.5rem 0.8rem; }
+    .slider-container { width: 100%; margin-bottom: 4rem; }
+
+    .theme-toggle {
+        position: static;
+        width: 100%;
+        right: auto;
+        top: auto;
+    }
 }
 
 /* Footer-aligned PHENOROB badge */
@@ -436,4 +480,25 @@ input[type="range"]::-moz-range-thumb { width: 32px; height: 32px; }
         gap: 1rem;
     }
     .site-badge-logo--right { justify-content: flex-start; }
+    .site-badge-logo img { width: min(45vw, 160px); }
+    .site-badge .copyright { font-size: 0.85rem; }
+}
+
+@media (max-width: 600px) {
+    header h1 { font-size: clamp(1.5rem, 7vw, 2rem); }
+    .header-content,
+    .block,
+    .tabs,
+    .viewer-container,
+    .site-badge {
+        width: min(96vw, 100%);
+    }
+
+    .block .block-inner { padding: 0.85rem 0.8rem; }
+    .plot-teaser { padding: 0.75rem; }
+    .plot-teaser img { max-height: 34vh; }
+    .download-link { width: 100%; justify-content: center; }
+    .download-link--compact { width: 100%; }
+    .slider-container { margin-bottom: 3.5rem; }
+    .tick-label { font-size: 0.9rem; max-width: 5.5rem; }
 }
