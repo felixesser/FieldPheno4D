@@ -1,0 +1,56 @@
+# Python cache files
+*.pyc
+*.las
+*.csv
+*.ply
+*.txt
+*.python-version
+*.lock
+
+# local tmp folder
+tmp/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Distribution / packaging
+.Python
+env/
+data/
+venv/
+ENV/
+env.bak/
+venv.bak/
+dist/
+build/
+*.egg-info/
+
+# Test output
+coverage.xml
+*.cover
+.tox/
+.nox/
+*.log
+nosetests.xml
+test-results/
+
+# IDE specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Miscellaneous
+*.DS_Store
+Thumbs.db
