@@ -90,14 +90,14 @@ python3 scripts/make_gif.py P147 --images-root data/FieldPheno4Dimg
 
 The website also has a static export path for GitHub Pages.
 
-1. Generate a GitHub-Pages-ready `index.html` in the repository root:
+1. Generate a GitHub-Pages-ready site bundle locally if you want to test it first:
 ```bash
 ./venv/bin/python3 scripts/build_github_pages.py
 ```
 2. Push the repository to your public GitHub account.
-3. In the repository settings, enable GitHub Pages from the repository root.
+3. In the repository settings, set GitHub Pages to deploy from GitHub Actions.
 
-The exported page uses the same static assets and dataset previews, so the interactive plot viewer works without the Flask backend.
+The workflow at `.github/workflows/pages.yml` builds the static site into `site/` and publishes it automatically on every push to `main`.
 
 
 ## Acknowledgments
