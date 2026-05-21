@@ -6,6 +6,7 @@ from pathlib import Path
 from PIL import Image
 
 
+
 def _resolve_image_dir(plot_folder: str, images_root: str, subdir: str) -> Path:
     plot_path = Path(plot_folder).expanduser()
     if plot_path.is_absolute() or plot_path.exists():
