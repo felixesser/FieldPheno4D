@@ -1,0 +1,3 @@
+[submodule "lib/pointcloudlib"]
+	path = lib/pointcloudlib
+	url = https://github.com/Engineering-Geodesy-Bonn/pointcloudlib.git
