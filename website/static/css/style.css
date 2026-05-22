@@ -96,7 +96,7 @@ header {
     margin: 0;
     height: auto;
     padding-bottom: 0;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 16 / 9;
     overflow: hidden;
 }
 
@@ -465,6 +465,10 @@ input[type="range"]::-moz-range-thumb { width: 32px; height: 32px; }
         gap: 0.65rem;
     }
 
+    .plot-teaser-media .figure-container {
+        aspect-ratio: 16 / 11;
+    }
+
     .plot-title { font-size: 1.1rem; }
     .plot-meta,
     .block .block-inner p,
@@ -553,6 +557,9 @@ input[type="range"]::-moz-range-thumb { width: 32px; height: 32px; }
     .block .block-inner { padding: 0.85rem 0.8rem; }
     .plot-teaser { padding: 0.75rem; }
     .plot-teaser-media { gap: 0.5rem; }
+    .plot-teaser-media .figure-container {
+        aspect-ratio: 16 / 12;
+    }
     .download-link { width: 100%; justify-content: center; }
     .download-link--compact { width: 100%; }
     .slider-container { margin-bottom: 3.5rem; }
