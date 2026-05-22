@@ -87,17 +87,27 @@ header {
 .plot-teaser-media {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem;
+    gap: 0.75rem;
     align-items: stretch;
     min-width: 0;
     align-self: stretch;
+    padding: 0.75rem;
+    border: 1px solid var(--panel-border);
+    border-radius: 16px;
+    background: rgba(255,255,255,0.35);
+    box-shadow: var(--shadow);
+    height: clamp(128px, 10vw, 168px);
 }
 
 .plot-teaser-media .figure-container {
     margin: 0;
     min-height: 0;
-    height: clamp(128px, 10vw, 168px);
-    padding-bottom: 0;
+    height: 100%;
+    padding: 0;
+    border: 1px solid var(--panel-border);
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
 }
 
 .plot-teaser-media img {
@@ -105,9 +115,9 @@ header {
     height: 100%;
     object-fit: contain;
     object-position: center;
-    border-radius: 14px;
-    border: 1px solid var(--panel-border);
-    background: #fff;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
     display: block;
 }
 
@@ -463,9 +473,6 @@ input[type="range"]::-moz-range-thumb { width: 32px; height: 32px; }
 
     .plot-teaser-media {
         gap: 0.65rem;
-    }
-
-    .plot-teaser-media .figure-container {
         height: clamp(118px, 18vw, 150px);
     }
 
@@ -556,8 +563,8 @@ input[type="range"]::-moz-range-thumb { width: 32px; height: 32px; }
 
     .block .block-inner { padding: 0.85rem 0.8rem; }
     .plot-teaser { padding: 0.75rem; }
-    .plot-teaser-media { gap: 0.5rem; }
-    .plot-teaser-media .figure-container {
+    .plot-teaser-media {
+        gap: 0.5rem;
         height: clamp(108px, 28vw, 132px);
     }
     .download-link { width: 100%; justify-content: center; }
