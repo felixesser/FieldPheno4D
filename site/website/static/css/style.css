@@ -136,6 +136,17 @@ header {
     box-shadow: var(--shadow);
 }
 
+/* Ensure teaser image fills the block width like the timetable */
+.block.teaser .figure-container img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 14px;
+    border: 1px solid var(--panel-border);
+    box-shadow: var(--shadow);
+}
+
 .download-link-box { margin: 0 0 1rem 0; }
 .download-link-card {
     padding: 1rem 1.1rem;
