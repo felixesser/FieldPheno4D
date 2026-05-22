@@ -54,11 +54,47 @@ document.addEventListener('DOMContentLoaded', () => {
             return image;
         };
 
-        const loadImageWithFallback = (image, candidates) => {
+        const loadImageWithFallback = (image, candidates, targetAspectRatio = null) => {
             let candIndex = 0;
             const tryNextCandidate = () => {
                 if (candIndex >= candidates.length) return;
                 image.src = candidates[candIndex++];
+            };
+            image.onload = () => {
+                if (!targetAspectRatio || image.dataset.padded === '1') return;
+
+                const naturalWidth = image.naturalWidth;
+                const naturalHeight = image.naturalHeight;
+                if (!naturalWidth || !naturalHeight) return;
+
+                const sourceAspectRatio = naturalWidth / naturalHeight;
+                let canvasWidth = naturalWidth;
+                let canvasHeight = naturalHeight;
+
+                if (sourceAspectRatio > targetAspectRatio) {
+                    canvasHeight = Math.round(canvasWidth / targetAspectRatio);
+                } else {
+                    canvasWidth = Math.round(canvasHeight * targetAspectRatio);
+                }
+
+                const canvas = document.createElement('canvas');
+                canvas.width = canvasWidth;
+                canvas.height = canvasHeight;
+                const context = canvas.getContext('2d');
+                if (!context) return;
+
+                context.fillStyle = '#ffffff';
+                context.fillRect(0, 0, canvasWidth, canvasHeight);
+
+                const scale = Math.min(canvasWidth / naturalWidth, canvasHeight / naturalHeight);
+                const drawWidth = Math.round(naturalWidth * scale);
+                const drawHeight = Math.round(naturalHeight * scale);
+                const offsetX = Math.round((canvasWidth - drawWidth) / 2);
+                const offsetY = Math.round((canvasHeight - drawHeight) / 2);
+                context.drawImage(image, offsetX, offsetY, drawWidth, drawHeight);
+
+                image.dataset.padded = '1';
+                image.src = canvas.toDataURL('image/png');
             };
             image.onerror = () => {
                 if (candIndex < candidates.length) {
@@ -79,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         teaserCandidates.push(`${dataBase}/${plot}/${plotLower}_teaser.png`);
         teaserCandidates.push(`${assetBase}/images/dummy_teaser.svg`);
-        loadImageWithFallback(teaserFigure.image, teaserCandidates);
+        loadImageWithFallback(teaserFigure, teaserCandidates);
 
         const orthophotoFigure = createFigureImage(`${plot} orthophoto image`);
         const orthophotoCandidates = [];
@@ -90,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
         orthophotoCandidates.push(`${dataBase}/${plot}/${plot}_orthophoto.png`);
         orthophotoCandidates.push(`${dataBase}/${plot}/${plot.replace(/[^0-9]/g, '')}_orthophoto.png`);
         orthophotoCandidates.push(`${assetBase}/images/dummy_teaser.svg`);
-        loadImageWithFallback(orthophotoFigure.image, orthophotoCandidates);
+        loadImageWithFallback(orthophotoFigure, orthophotoCandidates, 3.25);
 
         teaserMedia.appendChild(teaserFigure);
         teaserMedia.appendChild(orthophotoFigure);
