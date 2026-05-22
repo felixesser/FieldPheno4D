@@ -78,18 +78,30 @@ header {
 
 .plot-teaser {
     display: grid;
-    /* give more room to orthophotos so they can use their full size */
-    grid-template-columns: minmax(260px, 420px) 1fr;
+    grid-template-columns: minmax(0, 1.4fr) minmax(320px, 1fr);
     gap: 1rem;
     padding: 1rem;
-    align-items: stretch; /* allow teaser image to fill the column height */
+    align-items: stretch;
 }
 
-.plot-teaser img {
+.plot-teaser-media {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    align-items: stretch;
+    min-width: 0;
+}
+
+.plot-teaser-media .figure-container {
+    margin: 0;
+    height: 100%;
+}
+
+.plot-teaser-media img {
     width: 100%;
     height: 100%;
-    max-height: 65vh; /* allow large orthophotos to expand */
-    object-fit: cover; /* fill the teaser box so it touches the left border */
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
     border-radius: 14px;
     border: 1px solid var(--panel-border);
     background: #fff;
@@ -446,8 +458,8 @@ input[type="range"]::-moz-range-thumb { width: 32px; height: 32px; }
         padding: 0.85rem;
     }
 
-    .plot-teaser img {
-        max-height: 42vh;
+    .plot-teaser-media {
+        gap: 0.65rem;
     }
 
     .plot-title { font-size: 1.1rem; }
@@ -537,7 +549,7 @@ input[type="range"]::-moz-range-thumb { width: 32px; height: 32px; }
 
     .block .block-inner { padding: 0.85rem 0.8rem; }
     .plot-teaser { padding: 0.75rem; }
-    .plot-teaser img { max-height: 34vh; }
+    .plot-teaser-media { gap: 0.5rem; }
     .download-link { width: 100%; justify-content: center; }
     .download-link--compact { width: 100%; }
     .slider-container { margin-bottom: 3.5rem; }

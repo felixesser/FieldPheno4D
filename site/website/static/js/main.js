@@ -45,36 +45,59 @@ document.addEventListener('DOMContentLoaded', () => {
         const teaser = document.createElement('div');
         teaser.className = 'plot-teaser';
 
-        const teaserImage = document.createElement('img');
-        // Try a set of candidate paths for a plot-specific teaser orthophoto, falling back to the dummy teaser.
-        const candidates = [];
-        // 1) If plot matches PlotNN pattern, try PNN_orthophoto.png inside the plot folder
+        const plotLower = plot.toLowerCase();
         const plotNumMatch = plot.match(/Plot(\d{1,3})$/);
+
+        const createFigureImage = (altText) => {
+            const figure = document.createElement('div');
+            figure.className = 'figure-container';
+            const image = document.createElement('img');
+            image.alt = altText;
+            figure.appendChild(image);
+            return { figure, image };
+        };
+
+        const loadImageWithFallback = (image, candidates) => {
+            let candIndex = 0;
+            const tryNextCandidate = () => {
+                if (candIndex >= candidates.length) return;
+                image.src = candidates[candIndex++];
+            };
+            image.onerror = () => {
+                if (candIndex < candidates.length) {
+                    tryNextCandidate();
+                }
+            };
+            tryNextCandidate();
+        };
+
+        const teaserMedia = document.createElement('div');
+        teaserMedia.className = 'plot-teaser-media';
+
+        const teaserFigure = createFigureImage(`${plot} teaser image`);
+        const teaserCandidates = [];
         if (plotNumMatch) {
             const idx = plotNumMatch[1].padStart(2, '0');
-            candidates.push(`${dataBase}/${plot}/P${idx}_orthophoto.png`);
+            teaserCandidates.push(`${dataBase}/${plot}/plot${idx}_teaser.png`);
         }
-        // 2) Try direct P*-orthophoto (for plots already named P###)
-        candidates.push(`${dataBase}/${plot}/${plot}_orthophoto.png`);
-        // 3) try common fallback name
-        candidates.push(`${dataBase}/${plot}/${plot.replace(/[^0-9]/g, '')}_orthophoto.png`);
-        // finally fall back to embedded dummy
-        candidates.push(`${assetBase}/images/dummy_teaser.svg`);
+        teaserCandidates.push(`${dataBase}/${plot}/${plotLower}_teaser.png`);
+        teaserCandidates.push(`${assetBase}/images/dummy_teaser.svg`);
+        loadImageWithFallback(teaserFigure.image, teaserCandidates);
 
-        let candIndex = 0;
-        const tryNextCandidate = () => {
-            if (candIndex >= candidates.length) return;
-            teaserImage.src = candidates[candIndex++];
-        };
-        teaserImage.onerror = () => {
-            // try next candidate
-            if (candIndex < candidates.length) {
-                tryNextCandidate();
-            }
-        };
-        tryNextCandidate();
-        teaserImage.alt = `${plot} teaser image`;
-        teaser.appendChild(teaserImage);
+        const orthophotoFigure = createFigureImage(`${plot} orthophoto image`);
+        const orthophotoCandidates = [];
+        if (plotNumMatch) {
+            const idx = plotNumMatch[1].padStart(2, '0');
+            orthophotoCandidates.push(`${dataBase}/${plot}/P${idx}_orthophoto.png`);
+        }
+        orthophotoCandidates.push(`${dataBase}/${plot}/${plot}_orthophoto.png`);
+        orthophotoCandidates.push(`${dataBase}/${plot}/${plot.replace(/[^0-9]/g, '')}_orthophoto.png`);
+        orthophotoCandidates.push(`${assetBase}/images/dummy_teaser.svg`);
+        loadImageWithFallback(orthophotoFigure.image, orthophotoCandidates);
+
+        teaserMedia.appendChild(teaserFigure.figure);
+        teaserMedia.appendChild(orthophotoFigure.figure);
+        teaser.appendChild(teaserMedia);
 
         const teaserBody = document.createElement('div');
         teaserBody.className = 'plot-teaser-body';

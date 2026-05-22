@@ -1,6 +1,6 @@
 # FieldPheno4D Dataset
 
-![FieldPheno4D Teaser](website/static/images/FIeldPheno4D_teaserimage_cut.png)
+![FieldPheno4D Teaser](website/static/images/FieldPheno4D_teaserimage_cut.png)
 
 > **Note:** The included web-based interactive viewer is currently **under construction**.
 
