@@ -86,7 +86,7 @@ header {
 
 .plot-teaser-media {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr) minmax(0, 4fr);
     gap: 0.75rem;
     align-items: stretch;
     min-width: 0;
@@ -99,18 +99,18 @@ header {
     height: clamp(128px, 10vw, 168px);
 }
 
-.plot-teaser-media .figure-container {
+.plot-teaser-media > img {
     margin: 0;
     min-height: 0;
     height: 100%;
     padding: 0;
-    border: 1px solid var(--panel-border);
-    border-radius: 12px;
+    border: 0;
+    border-radius: 0;
     overflow: hidden;
-    background: #fff;
+    background: transparent;
 }
 
-.plot-teaser-media img {
+.plot-teaser-media > img {
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -474,6 +474,7 @@ input[type="range"]::-moz-range-thumb { width: 32px; height: 32px; }
     .plot-teaser-media {
         gap: 0.65rem;
         height: clamp(118px, 18vw, 150px);
+        grid-template-columns: minmax(0, 1fr) minmax(0, 4fr);
     }
 
     .plot-title { font-size: 1.1rem; }
@@ -566,6 +567,7 @@ input[type="range"]::-moz-range-thumb { width: 32px; height: 32px; }
     .plot-teaser-media {
         gap: 0.5rem;
         height: clamp(108px, 28vw, 132px);
+        grid-template-columns: minmax(0, 1fr) minmax(0, 4fr);
     }
     .download-link { width: 100%; justify-content: center; }
     .download-link--compact { width: 100%; }

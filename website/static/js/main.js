@@ -49,12 +49,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const plotNumMatch = plot.match(/Plot(\d{1,3})$/);
 
         const createFigureImage = (altText) => {
-            const figure = document.createElement('div');
-            figure.className = 'figure-container';
             const image = document.createElement('img');
             image.alt = altText;
-            figure.appendChild(image);
-            return { figure, image };
+            return image;
         };
 
         const loadImageWithFallback = (image, candidates) => {
@@ -95,8 +92,8 @@ document.addEventListener('DOMContentLoaded', () => {
         orthophotoCandidates.push(`${assetBase}/images/dummy_teaser.svg`);
         loadImageWithFallback(orthophotoFigure.image, orthophotoCandidates);
 
-        teaserMedia.appendChild(teaserFigure.figure);
-        teaserMedia.appendChild(orthophotoFigure.figure);
+        teaserMedia.appendChild(teaserFigure);
+        teaserMedia.appendChild(orthophotoFigure);
         teaser.appendChild(teaserMedia);
 
         const teaserBody = document.createElement('div');
