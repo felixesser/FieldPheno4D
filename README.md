@@ -1,5 +1,7 @@
 # FieldPheno4D Dataset
 
+![FieldPheno4D Teaser](site/images/FIeldPheno4D_teaserimage_cut.png)
+
 > **Note:** The included web-based interactive viewer is currently **under construction**.
 
 ## Overview

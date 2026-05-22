@@ -289,6 +289,17 @@ header p { margin: 0.35rem 0 0; color: var(--muted-color); font-size: 0.98rem; }
     font-size: 1.2rem;
 }
 
+/* Teaser image shown under the main title */
+.header-teaser { margin-top: 1rem; }
+.header-teaser img {
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+    border: 1px solid var(--panel-border);
+    box-shadow: var(--shadow);
+    display: block;
+}
+
 .theme-toggle {
     padding: 0.6rem 0.9rem;
     cursor: pointer;
