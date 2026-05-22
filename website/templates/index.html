@@ -11,12 +11,18 @@
         <div class="header-content">
             <h1>{{ title }}</h1>
             <div class="dataset-description">{{ description|safe }}</div>
-            <figure class="header-teaser" aria-hidden="true">
-                <img src="{{ asset_base }}/images/FIeldPheno4D_teaserimage_cut.png" alt="FieldPheno4D teaser image">
-            </figure>
         </div>
         <button id="theme-toggle" class="theme-toggle">Toggle theme</button>
     </header>
+
+    <!-- Teaser image as a content block matching the width of other blocks -->
+    <section class="block teaser">
+        <div class="block-inner">
+            <figure class="figure-container">
+                <img src="{{ asset_base }}/images/FIeldPheno4D_teaserimage_cut.png" alt="FieldPheno4D teaser image">
+            </figure>
+        </div>
+    </section>
 
     <main>
         <!-- Block 1: Highlights -->
