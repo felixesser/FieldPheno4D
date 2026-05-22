@@ -90,14 +90,14 @@ header {
     gap: 1rem;
     align-items: stretch;
     min-width: 0;
+    align-self: stretch;
 }
 
 .plot-teaser-media .figure-container {
     margin: 0;
-    height: auto;
+    min-height: 0;
+    height: clamp(128px, 10vw, 168px);
     padding-bottom: 0;
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
 }
 
 .plot-teaser-media img {
@@ -466,7 +466,7 @@ input[type="range"]::-moz-range-thumb { width: 32px; height: 32px; }
     }
 
     .plot-teaser-media .figure-container {
-        aspect-ratio: 16 / 11;
+        height: clamp(118px, 18vw, 150px);
     }
 
     .plot-title { font-size: 1.1rem; }
@@ -558,7 +558,7 @@ input[type="range"]::-moz-range-thumb { width: 32px; height: 32px; }
     .plot-teaser { padding: 0.75rem; }
     .plot-teaser-media { gap: 0.5rem; }
     .plot-teaser-media .figure-container {
-        aspect-ratio: 16 / 12;
+        height: clamp(108px, 28vw, 132px);
     }
     .download-link { width: 100%; justify-content: center; }
     .download-link--compact { width: 100%; }
