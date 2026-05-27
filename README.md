@@ -27,6 +27,7 @@ The crop plots are measured by the field robot platform as described above from 
 
 The unzipped folders have the following structure: 
 
+```bash
 PlotXX.zip/
     ├──  PlotXX/
         ├──YYMMDD.las
@@ -39,6 +40,7 @@ PlotXX.zip/
             ├──nadir/: nadir images (.png) on the point cloud
             ├──side_xz/: xz-axis images (.png) on the point cloud
             ├──side_yz/: yz-axis images (.png) on the point cloud
+```
 
 This also installs the local `pointcloudlib` clone from `lib/pointcloudlib` so the DEM preview script can import it directly.
 
