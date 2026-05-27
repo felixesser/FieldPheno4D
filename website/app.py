@@ -63,6 +63,16 @@ def _load_text_html(filename: str) -> Markup:
     return html
 
 
+def _load_raw_text(filename: str) -> str:
+    text_path = Path(__file__).resolve().parent / "texts" / filename
+    try:
+        if text_path.exists():
+            return text_path.read_text(encoding="utf-8").strip()
+    except Exception:
+        return ""
+    return ""
+
+
 def _load_title_text() -> str:
     title_path = Path(__file__).resolve().parent / "texts" / "title.txt"
     title_text = "FieldPheno4D Dataset"
@@ -134,6 +144,7 @@ def _build_page_context(*, asset_base: str, data_base: str) -> dict[str, object]
         "asset_base": asset_base.rstrip("/"),
         "data_base": data_base.rstrip("/"),
         "description": _load_text_html("description.txt"),
+        "citation": _load_raw_text("citation.bibtex"),
         "title": _load_title_text(),
         "acknowledgments": _load_text_html("acknowledgments.txt"),
         "download_links": _load_download_links(),

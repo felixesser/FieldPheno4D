@@ -161,6 +161,22 @@ header {
     box-shadow: var(--shadow);
 }
 
+.citation-text {
+    margin: 0;
+    padding: 1rem 1.1rem;
+    border-radius: 14px;
+    border: 1px solid var(--panel-border);
+    background: rgba(255, 255, 255, 0.35);
+    box-shadow: var(--shadow);
+    color: var(--muted-color);
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 1rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-x: auto;
+}
+
 /* Ensure teaser image fills the block width like the timetable */
 .block.teaser .figure-container img {
     width: 100%;
@@ -295,6 +311,11 @@ header {
 .block .block-inner .download-link-card--missing {
     font-size: 1.2rem;
     color: var(--muted-color);
+    line-height: 1.6;
+}
+
+.block .block-inner .citation-text {
+    font-size: 1rem;
     line-height: 1.6;
 }
 
