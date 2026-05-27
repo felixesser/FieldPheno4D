@@ -170,7 +170,7 @@ header {
     box-shadow: var(--shadow);
     color: var(--muted-color);
     font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
-    font-size: 1rem;
+    font-size: 1.2rem;
     line-height: 1.6;
     white-space: pre-wrap;
     word-break: break-word;
@@ -315,7 +315,7 @@ header {
 }
 
 .block .block-inner .citation-text {
-    font-size: 1rem;
+    font-size: 1.2rem;
     line-height: 1.6;
 }
 
