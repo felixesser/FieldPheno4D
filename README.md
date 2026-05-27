@@ -56,13 +56,6 @@ source venv/bin/activate
 python3 scripts/generate_fieldpheno4d_dem.py /mnt/d/FieldPheno4D/pointclouds --plots PlotXX
 ```
 
-## Update GitHub Webiste
-
-```bash
-source venv/bin/activate
-./venv/bin/python3 scripts/build_github_pages.py
-```
-
 ## Citation
 
 ```bash
@@ -79,4 +72,4 @@ source venv/bin/activate
 
 ## Acknowledgments
 
-This work has been funded by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) under Germany’s Excellence Strategy, EXC-2070 – 390732324 – PhenoRob.
+This work has been funded by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) under Germany’s Excellence Strategy, EXC-2070 – 390732324 – PhenoRob. This work has been partially supported by the German Federal Ministry of Research, Technology and Space (BMFTR) under the Robotics Institute Germany (RIG).
