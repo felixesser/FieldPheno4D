@@ -31,12 +31,12 @@ jobs:
         run: python -m pip install --upgrade pip && python -m pip install -r requirements.txt
 
       - name: Build static site
-        run: python scripts/build_github_pages.py
+        run: python scripts/build_github_pages.py --output-dir .pages_build
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: site
+          path: .pages_build
 
   deploy:
     needs: build

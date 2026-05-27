@@ -1,8 +1,8 @@
 from __future__ import annotations
 
+import argparse
 import sys
-import os
-import subprocess
+import shutil
 from pathlib import Path
 
 repo_root = Path(__file__).resolve().parents[1]
@@ -13,64 +13,45 @@ if repo_root_str not in sys.path:
 from website.app import app, _build_page_context
 
 
-def _github_raw_base() -> str:
-    repository = os.environ.get("GITHUB_REPOSITORY", "").strip()
-    if repository:
-        return f"https://raw.githubusercontent.com/{repository}/main"
-
-    try:
-        remote_url = subprocess.check_output(
-            ["git", "remote", "get-url", "origin"],
-            cwd=repo_root,
-            text=True,
-        ).strip()
-    except Exception:
-        return ""
-
-    if remote_url.startswith("git@github.com:"):
-        repository = remote_url.removeprefix("git@github.com:").removesuffix(".git")
-        return f"https://raw.githubusercontent.com/{repository}/main"
-
-    if remote_url.startswith("https://github.com/"):
-        repository = remote_url.removeprefix("https://github.com/").removesuffix(".git")
-        return f"https://raw.githubusercontent.com/{repository}/main"
-
-    return ""
+def _copy_tree(src: Path, dst: Path) -> None:
+    if dst.exists():
+        shutil.rmtree(dst)
+    if src.exists():
+        shutil.copytree(src, dst)
 
 
-def _render_site(site_root: Path, *, asset_base: str, data_base: str, rewrite_timetable_asset: bool = False) -> None:
-    site_root.mkdir(parents=True, exist_ok=True)
-    context = _build_page_context(asset_base=asset_base, data_base=data_base)
+def _prepare_pages_artifact(output_root: Path) -> None:
+    if output_root.exists():
+        shutil.rmtree(output_root)
+    output_root.mkdir(parents=True, exist_ok=True)
+
+    context = _build_page_context(asset_base="website/static", data_base="data/FieldPheno4Dimg")
 
     with app.app_context():
         rendered = app.jinja_env.get_template("index.html").render(**context)
 
-    if rewrite_timetable_asset:
-        rendered = rendered.replace(
-            'src="images/fieldpheno4d_timetable.png"',
-            f'src="{asset_base}/images/fieldpheno4d_timetable.png"',
-        )
+    (output_root / "index.html").write_text(rendered, encoding="utf-8")
+    print(f"Wrote {output_root / 'index.html'}")
 
-    (site_root / "index.html").write_text(rendered, encoding="utf-8")
-    print(f"Wrote {site_root / 'index.html'}")
+    _copy_tree(repo_root / "website" / "static", output_root / "website" / "static")
+    _copy_tree(repo_root / "images", output_root / "images")
+    _copy_tree(repo_root / "data" / "FieldPheno4Dimg", output_root / "data" / "FieldPheno4Dimg")
 
-    (site_root / ".nojekyll").write_text("", encoding="utf-8")
-    print(f"Prepared GitHub Pages site in {site_root}")
+    (output_root / ".nojekyll").write_text("", encoding="utf-8")
+    print(f"Prepared GitHub Pages artifact in {output_root}")
 
 
 def main() -> int:
-    site_root = repo_root / "site"
-    docs_root = repo_root / "docs"
-    raw_base = _github_raw_base()
-    _render_site(site_root, asset_base=f"{raw_base}/website/static" if raw_base else "website/static", data_base=f"{raw_base}/data/FieldPheno4Dimg" if raw_base else "data/FieldPheno4Dimg", rewrite_timetable_asset=True)
-    docs_asset_base = f"{raw_base}/website/static" if raw_base else "website/static"
-    docs_data_base = f"{raw_base}/data/FieldPheno4Dimg" if raw_base else "data/FieldPheno4Dimg"
-    _render_site(
-        docs_root,
-        asset_base=docs_asset_base,
-        data_base=docs_data_base,
-        rewrite_timetable_asset=True,
+    parser = argparse.ArgumentParser(description="Build a GitHub Pages artifact directory.")
+    parser.add_argument(
+        "--output-dir",
+        default=".pages_build",
+        help="Output folder for the generated Pages artifact.",
     )
+    args = parser.parse_args()
+
+    output_root = (repo_root / args.output_dir).resolve()
+    _prepare_pages_artifact(output_root)
     return 0
 
 
