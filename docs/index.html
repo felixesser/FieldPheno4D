@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FieldPheno4D Dataset</title>
+    <link rel="stylesheet" href="https://raw.githubusercontent.com/felixesser/FieldPheno4D/main/website/static/css/style.css?v=20260522">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>FieldPheno4D: The Multi-temporal, Multi-Crop dataset of High-Resolution 3D Point Clouds captured in the Field</h1>
+            <div class="dataset-description"><p>In the context of climate change, detailed knowledge of plant growth and crop responses to environmental conditions is essential for crop breeding, precision agriculture,
+and sustainable resource management. Monitoring plant development throughout the growing season requires accurate determination of phenotypic traits,
+with classical parameters such as plant height, canopy cover, and leaf area index serving as crucial indicators. 
+Traditional methods for measuring these traits are labor-intensive and often destructive, limiting their application in large-scale studies.
+Modern field phenotyping platforms equipped with sensors such as RGB cameras and laser scanners are increasingly deployed due to their potential for automation and high-throughput phenotyping.
+However, most existing systems lack the reconstruction quality necessary to determine complex traits at the single-plant and plant-organ scale,
+or to extract plant skeletons-capabilities that are becoming increasingly important in contemporary phenotyping approaches.</p>
+<p>This dataset contains high-quality 4D point clouds of multiple crop species (bean, wheat, corn, sugar beet, potato, and brassica) acquired using a specialized field phenotyping robot.
+The platform is equipped with two industrial-grade laser triangulation scanners (micrometer precision) and a centimeter-accurate georeferencing system comprising RTK GNSS and an inertial navigation system (INS), enabling precise multi-temporal registration of 3D point clouds.
+High quality is defined by sub-millimeter point precision, sub-millimeter spatial resolution, centimeter-level georeferencing accuracy, and high consistency between the two scanners. 
+The dataset is organized into individual crop plots containing single crop rows of each species, scanned with by the field robot.
+This dataset enables multi-temporal phenotypic trait determination at the single plant-organ scale under field conditions.
+The key novelty lies in the combination of field-based acquisition with high-quality reconstruction,
+addressing the quality limitations of existing datasets created in the field.</p></div>
+        </div>
+        <button id="theme-toggle" class="theme-toggle">Toggle theme</button>
+    </header>
+
+    <!-- Teaser image as a content block matching the width of other blocks -->
+    <section class="block teaser">
+        <div class="block-inner">
+            <figure class="timetable-figure">
+                <img src="https://raw.githubusercontent.com/felixesser/FieldPheno4D/main/website/static/images/FieldPheno4D_teaserimage_cut.png" alt="FieldPheno4D teaser image">
+            </figure>
+        </div>
+    </section>
+
+    <main>
+        <!-- Block 2: 3D point clouds (tabs + viewer) -->
+        <section class="block pointclouds">
+            <div class="block-inner">
+                <h2>3D point clouds</h2>
+                <div id="plots-grid" class="plots-grid"></div>
+            </div>
+        </section>
+
+        <!-- Block 3: Timetable -->
+        <section class="block timetable">
+            <div class="block-inner">
+                <h2>Timetable</h2>
+                <figure class="timetable-figure">
+                    <img src="https://raw.githubusercontent.com/felixesser/FieldPheno4D/main/website/static/images/fieldpheno4d_timetable.png" alt="FieldPheno4D measurement timetable">
+                </figure>
+            </div>
+        </section>
+
+        <!-- Block 4: Citation -->
+        <section class="block citation">
+            <div class="block-inner">
+                <h2>Citation</h2>
+                <pre class="citation-text">@data{FK2/HYI2DS_2026,
+    author = {Esser, Felix and Klingbeil, Lasse and Kuhlmann, Heiner},
+    publisher = {bonndata},
+    title = {FieldPheno4D},
+    year = {2026},
+    version = {V1},
+    doi = {10.60507/FK2/HYI2DS},
+    url = {https://doi.org/10.60507/FK2/HYI2DS}
+}</pre>
+            </div>
+        </section>
+
+        <!-- Block 5: Acknowledgments -->
+        <section class="block acknowledgments">
+            <div class="block-inner">
+                <h2>Acknowledgments</h2>
+                <div class="ack-text"><p>This work has been funded by been funded by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) under Germany's Excellence Strategy, EXC-2070 - 390732324 (PhenoRob).</p>
+<p>This work has been partially supported by the German Federal Ministry of Research, Technology and Space (BMFTR) under the Robotics Institute Germany (RIG).</p></div>
+            </div>
+        </section>
+
+        <!-- Block 6: License -->
+        <section class="block license">
+            <div class="block-inner">
+                <h2>License</h2>
+                <div class="license-text">
+                    <p>The dataset is distributed under the Creative Commons <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a> license, which means you are allowed to share and adapt the dataset as long as you attribute our work. Please see the license webpage for detailed information on the restrictions and terms.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        window.ASSET_BASE = "https://raw.githubusercontent.com/felixesser/FieldPheno4D/main/website/static";
+        window.DATA_BASE = "https://raw.githubusercontent.com/felixesser/FieldPheno4D/main/data/FieldPheno4Dimg";
+        window.DOWNLOAD_LINKS = {"Plot01": {"species": "Bean (Mallory)", "url": "https://bonndata.uni-bonn.de/api/access/datafile/:persistentId?persistentId=doi:10.60507/FK2/HYI2DS/P1IBUD"}, "Plot02": {"species": "Wheat (Sorbas)", "url": "https://bonndata.uni-bonn.de/api/access/datafile/:persistentId?persistentId=doi:10.60507/FK2/HYI2DS/TFDGWV"}, "Plot03": {"species": "Corn (Mirza)", "url": "https://bonndata.uni-bonn.de/api/access/datafile/:persistentId?persistentId=doi:10.60507/FK2/HYI2DS/XIRWOM"}, "Plot04": {"species": "Corn (Popcorn Robust)", "url": "https://bonndata.uni-bonn.de/api/access/datafile/:persistentId?persistentId=doi:10.60507/FK2/HYI2DS/GG7AOE"}, "Plot05": {"species": "Potato (Balena)", "url": "https://bonndata.uni-bonn.de/api/access/datafile/:persistentId?persistentId=doi:10.60507/FK2/HYI2DS/NBEUHV"}, "Plot06": {"species": "Sugar Beet (-)", "url": "https://bonndata.uni-bonn.de/api/access/datafile/:persistentId?persistentId=doi:10.60507/FK2/HYI2DS/YUALBT"}, "Plot07": {"species": "Brassica (Carinata)", "url": "https://bonndata.uni-bonn.de/api/access/datafile/:persistentId?persistentId=doi:10.60507/FK2/HYI2DS/CFG2WT"}};
+        window.PLOTS_DATA = {"Plot01": ["230516", "230525", "230530", "230601", "230606", "230613", "230619", "230621", "230625", "230629", "230705", "230711", "230719", "230726", "230801", "230807", "230815", "230821"], "Plot02": ["230525", "230530", "230601", "230606", "230613", "230619", "230621", "230625", "230629", "230705", "230711", "230719", "230726", "230801", "230807", "230815", "230821"], "Plot03": ["230601", "230606", "230613", "230619", "230621", "230625", "230629", "230705", "230711"], "Plot04": ["230601", "230606", "230613", "230619", "230621"], "Plot05": ["230613", "230619", "230621", "230625", "230629", "230705", "230711", "230719", "230726", "230801", "230807", "230815", "230821"], "Plot06": ["230530", "230601", "230606", "230613", "230619", "230621", "230625", "230629", "230705", "230711", "230719", "230726", "230801", "230815", "230821"], "Plot07": ["230516", "230525", "230530", "230601", "230606", "230613", "230619", "230621", "230625", "230629", "230705", "230711", "230719", "230726", "230801", "230807", "230815", "230821"]};
+    </script>
+    <script src="https://raw.githubusercontent.com/felixesser/FieldPheno4D/main/website/static/js/main.js?v=20260522"></script>
+    <div class="site-badge" aria-hidden="true">
+        <div class="site-badge-logos">
+            <div class="site-badge-logo site-badge-logo--left">
+                <img src="https://raw.githubusercontent.com/felixesser/FieldPheno4D/main/website/static/images/logo_phenorob.png" alt="PHENOROB logo">
+            </div>
+            <div class="site-badge-logo site-badge-logo--right">
+                <img src="https://raw.githubusercontent.com/felixesser/FieldPheno4D/main/website/static/images/logo_unibonn.png" alt="University of Bonn logo">
+            </div>
+        </div>
+        <div class="copyright">Copyright © 2026 University of Bonn</div>
+    </div>
+</body>
+</html>
