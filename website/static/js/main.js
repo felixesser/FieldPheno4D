@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         plots.forEach((plot, index) => {
             const dates = dataset[plot] || [];
             const linkData = window.DOWNLOAD_LINKS && window.DOWNLOAD_LINKS[plot] ? window.DOWNLOAD_LINKS[plot] : null;
-            const card = createPlotCard(plot, dates, linkData, false);
+            const card = createPlotCard(plot, dates, linkData, plot === 'Plot01');
             plotsGrid.appendChild(card);
         });
     }
