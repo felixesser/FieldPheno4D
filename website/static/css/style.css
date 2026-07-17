@@ -55,6 +55,23 @@ header {
 .block.highlights { border-left: 4px solid var(--accent-color); }
 .block.pointclouds { border-left: 4px solid var(--accent-strong); }
 .block.acknowledgments { border-left: 4px solid rgba(0,0,0,0.06); }
+.block.robot { border-left: 4px solid var(--accent-color); }
+
+/* Field robot block: figure alongside descriptive text */
+.block.robot .robot-figure { margin: 0 0 1rem 0; }
+.block.robot .robot-figure img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 14px;
+}
+@media (min-width: 900px) {
+    .block.robot .block-inner { display: grid; grid-template-columns: minmax(0, 42%) minmax(0, 1fr); grid-template-rows: auto 1fr; column-gap: 1.5rem; align-items: start; }
+    .block.robot h2 { grid-column: 1 / -1; }
+    .block.robot .robot-figure { grid-column: 1; grid-row: 2; margin: 0; }
+    .block.robot .robot-text { grid-column: 2; grid-row: 2; }
+}
 
 /* Adjust viewer-container inside block-inner */
 .block .viewer-container { padding: 0; margin: 0; }

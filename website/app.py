@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import re
 from pathlib import Path
 
 from flask import Flask, jsonify, render_template, send_from_directory
@@ -61,6 +62,45 @@ def _load_text_html(filename: str) -> Markup:
     except Exception:
         html = ""
     return html
+
+
+def _latex_to_html(text: str) -> str:
+    """Convert the subset of LaTeX markup used in the source texts to plain HTML."""
+    # \href{url}{label} -> anchor
+    text = re.sub(
+        r"\\href\{([^}]*)\}\{([^}]*)\}",
+        r'<a href="\1" target="_blank" rel="noopener noreferrer">\2</a>',
+        text,
+    )
+    # Drop citation commands entirely (including any preceding space).
+    text = re.sub(r"\s*\\cite\{[^}]*\}", "", text)
+    # Turn figure references such as "Figure~\ref{FigUGV}" into "the figure".
+    text = re.sub(r"(?:Figures?\s*)?~?\\ref\{[^}]*\}", "the figure", text)
+    # Remaining LaTeX ties (~) are non-breaking spaces.
+    text = text.replace("~", " ")
+    # \text{x} -> x
+    text = re.sub(r"\\text\{([^}]*)\}", r"\1", text)
+    # Thin space -> regular space.
+    text = text.replace("\\,", " ")
+    # Strip inline-math delimiters, keeping their content.
+    text = re.sub(r"\$([^$]*)\$", r"\1", text)
+    # Tidy up whitespace left behind by removals.
+    text = re.sub(r" +([.,])", r"\1", text)
+    text = re.sub(r" {2,}", " ", text)
+    return text.strip()
+
+
+def _load_multiline_text_html(filename: str) -> Markup:
+    """Render a text file where each non-empty line becomes a paragraph, with LaTeX cleanup."""
+    raw_text = _load_raw_text(filename)
+    if not raw_text:
+        return Markup("")
+    paragraphs = [
+        f"<p>{_latex_to_html(line.strip())}</p>"
+        for line in raw_text.splitlines()
+        if line.strip()
+    ]
+    return Markup("\n".join(paragraphs))
 
 
 def _load_raw_text(filename: str) -> str:
@@ -144,6 +184,7 @@ def _build_page_context(*, asset_base: str, data_base: str) -> dict[str, object]
         "asset_base": asset_base.rstrip("/"),
         "data_base": data_base.rstrip("/"),
         "description": _load_text_html("description.txt"),
+        "robot_description": _load_multiline_text_html("description_robot.txt"),
         "citation": _load_raw_text("citation.bibtex"),
         "title": _load_title_text(),
         "acknowledgments": _load_text_html("acknowledgments.txt"),

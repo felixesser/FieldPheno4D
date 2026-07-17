@@ -38,6 +38,19 @@ addressing the quality limitations of existing datasets created in the field.</p
     </section>
 
     <main>
+        <!-- Block: Field robot platform -->
+        <section class="block robot">
+            <div class="block-inner">
+                <h2>Field robot platform</h2>
+                <figure class="robot-figure">
+                    <img src="website/static/images/field_robot.png" alt="Field phenotyping robot platform used to acquire the dataset">
+                </figure>
+                <div class="robot-text"><p>The field robot, designed for high-resolution 3D reconstruction of plants in agricultural fields, features a Thorvald II base platform with four electric wheels, as shown in the figure. It is extended by a reversed U-shaped aluminum enclosure measuring 2 x 2 x 2 m to mount the sensors and shield them from sunlight and wind. The robot can be steered over the field using a remote control via a Robot Operating System (ROS) interface.</p>
+<p>For trajectory estimation, we equipped the robot with an SBG Ellipse D georeferencing system featuring a dual-antenna multi-GNSS receiver that provides position and heading data at 5 Hz via RTK, and IMU data at 100 Hz. We fuse this loosely coupled data using a factor graph, which is optimized to estimate centimeter-level-accurate trajectories in post-processing.</p>
+<p>The laser scanning system consists of two industrial-grade laser triangulation scanners <a href="https://lmi3d.com/gocator-2490-3d-laser-line-profiler/?lang=engl" target="_blank" rel="noopener noreferrer">LMI Geocator 2490</a>, attached to the inner base frame at the front of the robot. The 2D laser profiles of the scanners point from the left and right into the center of the robot platform, as indicated in the figure b). Each scanner acquires laser profiles at a frequency of 200 Hz synchronized with GPS time using the PPS signal from the GNSS receiver. The spatial resolution along a single laser profile is 0.5 mm at a distance of 1 meter from the plant. The profile-to-profile distances along the trajectory achieve a resolution of 0.5 mm at a robot velocity of 10 cm/s.</p></div>
+            </div>
+        </section>
+
         <!-- Block 2: 3D point clouds (tabs + viewer) -->
         <section class="block pointclouds">
             <div class="block-inner">
