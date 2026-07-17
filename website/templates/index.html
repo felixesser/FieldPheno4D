@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FieldPheno4D Dataset</title>
-    <link rel="stylesheet" href="{{ asset_base }}/css/style.css?v=20260717">
+    <link rel="stylesheet" href="{{ asset_base }}/css/style.css?v=20260717b">
 </head>
 <body>
     <header>
@@ -29,10 +29,12 @@
         <section class="block robot">
             <div class="block-inner">
                 <h2>Field robot platform</h2>
-                <figure class="robot-figure">
-                    <img src="{{ asset_base }}/images/field_robot.png" alt="Field phenotyping robot platform used to acquire the dataset">
-                </figure>
-                <div class="robot-text">{{ robot_description|safe }}</div>
+                <div class="robot-row">
+                    <figure class="robot-figure">
+                        <img src="{{ asset_base }}/images/field_robot.png" alt="Field phenotyping robot platform used to acquire the dataset">
+                    </figure>
+                    <div class="robot-text">{{ robot_description|safe }}</div>
+                </div>
             </div>
         </section>
 
@@ -87,7 +89,7 @@
         window.DOWNLOAD_LINKS = {{ download_links | tojson }};
         window.PLOTS_DATA = {{ plots_data | tojson }};
     </script>
-    <script src="{{ asset_base }}/js/main.js?v=20260717"></script>
+    <script src="{{ asset_base }}/js/main.js?v=20260717b"></script>
     <div class="site-badge" aria-hidden="true">
         <div class="site-badge-logos">
             <div class="site-badge-logo site-badge-logo--left">

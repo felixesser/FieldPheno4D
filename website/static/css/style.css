@@ -67,10 +67,21 @@ header {
     border-radius: 14px;
 }
 @media (min-width: 900px) {
-    .block.robot .block-inner { display: grid; grid-template-columns: minmax(0, 42%) minmax(0, 1fr); grid-template-rows: auto 1fr; column-gap: 1.5rem; align-items: start; }
-    .block.robot h2 { grid-column: 1 / -1; }
-    .block.robot .robot-figure { grid-column: 1; grid-row: 2; margin: 0; }
-    .block.robot .robot-text { grid-column: 2; grid-row: 2; }
+    /* The figure is the only in-flow child, so it sets the row height; the text
+       is absolutely positioned to fill that same height and scrolls if longer. */
+    .block.robot .robot-row { position: relative; }
+    .block.robot .robot-figure { width: 42%; margin: 0; }
+    .block.robot .robot-text {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: calc(42% + 1.5rem);
+        right: 0;
+        overflow-y: auto;
+        padding-right: 0.25rem;
+    }
+    .block.robot .robot-text > :first-child { margin-top: 0; }
+    .block.robot .robot-text > :last-child { margin-bottom: 0; }
 }
 
 /* Adjust viewer-container inside block-inner */
