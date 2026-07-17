@@ -262,6 +262,8 @@ document.addEventListener('DOMContentLoaded', () => {
             sideXzContainer,
             sideYzContainer,
             loadingCombinedImage: false,
+            autoplayEnabled: !!openByDefault,
+            autoplayTimer: null,
         };
 
         timeSlider.addEventListener('input', (event) => {
@@ -275,6 +277,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isOpen && state.dates.length > 0) {
                 renderSliderTicks(state);
                 updatePlotImage(state, Number(timeSlider.value || 0));
+                startAutoplay(state);
+            } else {
+                stopAutoplay(state);
             }
         });
 
@@ -284,6 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (state.dates.length > 0) {
                 renderSliderTicks(state);
                 updatePlotImage(state, 0);
+                startAutoplay(state);
             }
             const label = summary.querySelector('.summary-text');
             if (label) label.textContent = 'Hide dataset';
@@ -332,6 +338,27 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             sliderTicks.appendChild(tickContainer);
         });
+    }
+
+    function startAutoplay(state) {
+        // Cycle through the dates from first to last, then wrap back to the
+        // first and continue. Only enabled for the plot opened by default.
+        if (!state.autoplayEnabled || state.autoplayTimer) return;
+        if (!state.dates || state.dates.length <= 1) return;
+        state.autoplayTimer = setInterval(() => {
+            const total = state.dates.length;
+            const current = Number(state.timeSlider.value) || 0;
+            const next = (current + 1) % total;
+            state.timeSlider.value = next;
+            updatePlotImage(state, next);
+        }, 1500);
+    }
+
+    function stopAutoplay(state) {
+        if (state.autoplayTimer) {
+            clearInterval(state.autoplayTimer);
+            state.autoplayTimer = null;
+        }
     }
 
     function formatDateString(dateStr) {
