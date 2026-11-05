@@ -20,3 +20,6 @@ env/
 # OS/editor files
 .DS_Store
 .vscode/
+
+# Presentation renders (large, not part of the website)
+/presentation/

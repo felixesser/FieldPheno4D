@@ -660,8 +660,13 @@ def write_combined_view_png(
     z_min: float | None = None,
     z_max: float | None = None,
     date_str: str | None = None,
+    presentation: bool = False,
 ) -> None:
-    """Write a combined PNG with Nadir, X-Z, and Y-Z views."""
+    """Write a combined PNG with Nadir, X-Z, and Y-Z views.
+
+    With ``presentation=True`` the figure is an exact 3840x2160 px (16:9) frame
+    with enlarged axis and info-box text, legible on a lecture hall projector.
+    """
 
     import matplotlib.pyplot as plt
     from matplotlib.patches import FancyBboxPatch
@@ -724,17 +729,27 @@ def write_combined_view_png(
     )
     masked_yz = np.ma.masked_where(grid_yz == nodata, grid_yz)
 
-    fig = plt.figure(figsize=(16, 10), dpi=300)
-
-    left_x = 0.055
-    left_w = 0.56
-    right_x = 0.67
-    right_w = 0.25
-    plot_bottom = 0.18
-    plot_h = 0.70
+    if presentation:
+        fig = plt.figure(figsize=(16, 9), dpi=240)
+        left_x = 0.085
+        left_w = 0.535
+        right_x = 0.66
+        right_w = 0.245
+        plot_bottom = 0.225
+        plot_h = 0.76
+        cbar_bottom = 0.10
+        cbar_h = 0.03
+    else:
+        fig = plt.figure(figsize=(16, 10), dpi=300)
+        left_x = 0.055
+        left_w = 0.56
+        right_x = 0.67
+        right_w = 0.25
+        plot_bottom = 0.18
+        plot_h = 0.70
+        cbar_bottom = 0.07
+        cbar_h = 0.035
     left_half_h = (plot_h - left_gap) / 2.0
-    cbar_bottom = 0.07
-    cbar_h = 0.035
 
     cmap_obj = plt.get_cmap(cmap).copy()
     cmap_obj.set_bad(color="#111111")
@@ -902,7 +917,7 @@ def write_combined_view_png(
             info_text,
             ha="left",
             va="center",
-            fontsize=11,
+            fontsize=24 if presentation else 11,
             color="black",
             transform=fig.transFigure,
             zorder=52,
@@ -911,7 +926,23 @@ def write_combined_view_png(
         )
 
     fig.subplots_adjust(left=0.0, right=1.0, top=1.0, bottom=0.0)
-    fig.savefig(path, bbox_inches="tight", pad_inches=0.02)
+    if presentation:
+        from matplotlib.ticker import MaxNLocator
+
+        for ax in (ax_nadir, ax_xz, ax_yz, cbar_ax):
+            ax.tick_params(labelsize=18)
+            ax.xaxis.label.set_size(22)
+            ax.yaxis.label.set_size(22)
+        # Fewer ticks so the enlarged labels do not collide.
+        for ax in (ax_nadir, ax_xz):
+            ax.xaxis.set_major_locator(MaxNLocator(nbins=8))
+        ax_yz.xaxis.set_major_locator(MaxNLocator(nbins=4))
+        for ax in (ax_nadir, ax_xz, ax_yz):
+            ax.yaxis.set_major_locator(MaxNLocator(nbins=4))
+        # Keep the exact 16:9 frame: a tight bbox would change the pixel size.
+        fig.savefig(path)
+    else:
+        fig.savefig(path, bbox_inches="tight", pad_inches=0.02)
     plt.close(fig)
     
 
@@ -1071,6 +1102,7 @@ def process_plot_dem(
     height_scalarfield_name: str = "height",
     pointcloud_output_root: str | Path | None = None,
     verbose: bool = True,
+    presentation: bool = False,
 ) -> None:
     """Process a plot folder and export DEM previews for each LAS/LAZ.
 
@@ -1625,5 +1657,6 @@ def process_plot_dem(
                 z_min=float(np.min(side_local[:, 2])) if side_local.size > 0 else None,
                 z_max=float(np.max(side_local[:, 2])) if side_local.size > 0 else None,
                 date_str=label,
+                presentation=presentation,
             )
 

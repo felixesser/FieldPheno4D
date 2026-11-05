@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+import numpy as np
 from PIL import Image
 
 
@@ -27,6 +28,31 @@ def _resolve_image_dir(plot_folder: str, images_root: str, subdir: str) -> Path:
     )
 
 
+def _apply_shared_palette(images: list[Image.Image], exact_colors: int = 16) -> list[Image.Image]:
+    """Quantize all frames to one palette so colors do not flicker between frames.
+
+    The most frequent colors (page and plot backgrounds) are kept exact. The remaining
+    entries are split evenly over all other distinct colors, because weighting them by
+    pixel count would spend the palette on large uniform areas and band the colormap.
+    """
+    frames = [img.convert("RGB") for img in images]
+    pixels = np.concatenate([np.asarray(frame).reshape(-1, 3) for frame in frames])
+    colors, counts = np.unique(pixels, axis=0, return_counts=True)
+    order = np.argsort(counts)[::-1]
+    exact = colors[order[:exact_colors]]
+    rest = colors[order[exact_colors:]]
+
+    entries = exact.astype(np.uint8).tobytes()
+    if rest.size:
+        swatch = Image.fromarray(rest[np.newaxis, :, :].astype(np.uint8), mode="RGB")
+        reduced = swatch.quantize(colors=256 - len(exact), method=Image.Quantize.MEDIANCUT)
+        entries += bytes(reduced.getpalette() or [])
+
+    palette = Image.new("P", (1, 1))
+    palette.putpalette(entries[:768].ljust(768, bytes(1)))
+    return [frame.quantize(palette=palette, dither=Image.Dither.FLOYDSTEINBERG) for frame in frames]
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Build a GIF from FieldPheno4D plot previews.")
     parser.add_argument("plot_folder", help="Plot folder name or path, e.g. P147 or data/FieldPheno4Dimg/P147.")
@@ -36,6 +62,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--size", nargs=2, type=int, default=(800, 800), metavar=("WIDTH", "HEIGHT"), help="Thumbnail size.")
     parser.add_argument("--duration", type=int, default=800, help="Frame duration in milliseconds.")
     parser.add_argument("--loop", type=int, default=0, help="GIF loop count. Use 0 for infinite loop.")
+    parser.add_argument("--shared-palette", action="store_true", help="Use one color palette for all frames.")
     return parser
 
 
@@ -54,6 +81,9 @@ def main() -> int:
         img = Image.open(file)
         img.thumbnail(tuple(args.size), Image.Resampling.LANCZOS)
         images.append(img)
+
+    if args.shared_palette:
+        images = _apply_shared_palette(images)
 
     output_path = Path(args.output).expanduser() if args.output else Path(args.plot_folder).expanduser()
     if output_path.is_dir():

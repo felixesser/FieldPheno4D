@@ -174,6 +174,11 @@ def _build_parser(config: dict | None = None) -> argparse.ArgumentParser:
     parser.add_argument("--dem-max-points", type=int, default=(config.get("dem_max_points") if config else None), help="Max points sampled per DEM.")
     parser.add_argument("--quiet", action="store_true", help="Reduce console output.")
     parser.add_argument(
+        "--presentation",
+        action="store_true",
+        help="Render combined views as 3840x2160 px frames with enlarged text for projectors.",
+    )
+    parser.add_argument(
         "--config",
         default=(config.get("config_path") if config else "scripts/process_plot_dem_config.json"),
         help="Path to JSON config file with default parameters.",
@@ -255,6 +260,7 @@ def main() -> int:
             height_scalarfield_name=config.get("height_scalarfield_name", "height"),
             pointcloud_output_root=args.pointcloud_output_root,
             verbose=not args.quiet,
+            presentation=args.presentation,
         )
         mirrored_dir = _mirror_output(plot_root, output_root, args.output_dir)
         print(f"[INFO] Mirrored previews to {mirrored_dir}")

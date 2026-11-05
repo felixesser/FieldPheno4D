@@ -56,6 +56,15 @@ source venv/bin/activate
 python3 scripts/generate_fieldpheno4d_dem.py /mnt/d/FieldPheno4D/pointclouds --plots PlotXX
 ```
 
+### Presentation GIF
+
+To show the combined view on a projector, render 16:9 frames with enlarged text into a separate folder and build a Full HD GIF. The regular previews used by the website are not changed.
+
+```bash
+python3 scripts/generate_fieldpheno4d_dem.py /mnt/d/FieldPheno4D/pointclouds --plots PlotXX --output-dir dem_presentation --output-root presentation --presentation
+python3 scripts/make_gif.py presentation/PlotXX --images-root . --subdir dem_presentation/png/combined --size 1920 1080 --shared-palette --output presentation/PlotXX/gif/combined_1080p.gif
+```
+
 ## Citation
 
 ```bash

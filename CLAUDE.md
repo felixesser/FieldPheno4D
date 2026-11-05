@@ -49,3 +49,14 @@ in the field.
   "3D point clouds" box, styled consistently with the existing template.
 - After making the changes, test the deployment of the website.
 - Remember all of the user's prompts in a `CLAUDE.md`.
+
+### 2026-11-05
+
+- Increase the resolution of the combined GIF (DEM plots over time) so it can be
+  shown at full projector size in a presentation. Increase the X font size and
+  the data shown top right in the combined figure so everything is legible from
+  the back of a lecture hall.
+- Generate the GIFs for all other plots too, save them in the existing folder
+  structure (`data/FieldPheno4Dimg/...`) and overwrite the old `.png` and `.gif`
+  files with the new ones.
+- Test the website locally, delete the intermediate copies, and commit the changes.
